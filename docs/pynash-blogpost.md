@@ -18,13 +18,15 @@ Hacking is best when you have something you want to do.  I have a band, and we p
 
 ### TL;DR
 
-I'll walk through how to use the python http client library [requests](http://docs.python-requests.org) and the [AWS python api library](http://aws.amazon.com/sdkforpython/) to concurrently stream files from soundcload to S3.  We'll take a look at a few of my other favorite things along the way.
+I'll walk through the process of properly getting started hacking with python IMH&HO. 
+
+We'll use the python http client library [requests](http://docs.python-requests.org) to get data from Soundcloud. We'll talk a bit about the design of what we will do next week using the [AWS python api library](http://aws.amazon.com/sdkforpython/) to concurrently stream files from soundcload to S3.  
 
 ### Venv Up! Pip and Paste! Git'r started
 
 No project starts without a sandbox (ie a virtualenv). You may "but it's just a hack", but setting up a proper sandbox is pretty easy. Suave operators use [virtualenv-wrapper](http://www.doughellmann.com/projects/virtualenvwrapper/) so in the interest of being classy, so will we.
 
-This is how I roll when I want to get started::
+This is how I roll when I want to get started (presuming I think it will be more than a gist of code).  After creating a github repo::
 
 ```bash
 $ cd /to/the/folder/where/the-magic-happens
@@ -36,6 +38,54 @@ $ mkvirtualenv sc2s3
              && git init \ 
              && git remote add origin git@github.com:whitmo/sc2s3.git
 (sc2s3)$ git add ./ && git commit -m 'gitty up' && git push -u origin master
+(sc2s3)$ pip install -e ./
+```
+
+The last step puts your new package onto the python path so you start
+executing it.
+
+### Technical investigation
+
+We live in the age of P.roggramming B.y G.oogling. Ever watch someone
+build a webapp with RoR? In this case, I need to know a bit about
+soundcloud and S3.  There is a soundcloud
+[actual python library](http://bit.ly/XuMjUU), but I notice that
+soundcloud has a fairly rich
+[REST/http API](http://developers.soundcloud.com/docs/api/reference#users)
+that will give me JSON.  All I need to do is
+[set up an application](http://soundcloud.com/you/apps) w/ soundcloud,
+and they will give me a client id and an access token.
+
+
+As all I need is a list of links, I think simply doing some http will
+be easiest.  I have a good hammer for this, the
+[requests](http://docs.python-requests.org) library by Kenneth
+"Kraftwerkzeung" Reitz.
+
+Let's grab it::
+
+```bash
+(sc2s3)$ pip install requests
+```
+
+Now, lets get prompt.  The python REPL (and it's mutant children like
+ipython notebook) rule.  Let's load up our 
+
+```bash
+(sc2s3)$ python
+>>> import requests
+>>> import sc2s3
+>>> help(requests)
+... # whole lotta on nice documentation
+>>> help(sc2s3)
+... # whole lotta nada
+```
+
+Now we can start to play
+
+```
+>>> clid = 'reallysupersecret123'
+>>> 
 ```
 
 
